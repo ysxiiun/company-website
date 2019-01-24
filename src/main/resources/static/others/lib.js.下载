@@ -1,0 +1,104 @@
+$(document).ready(function($) {
+	
+	// 手机导航
+	$('.menuBtn').append('<b></b><b></b><b></b>');
+	$('.menuBtn').click(function(event) {
+		$(this).toggleClass('open');
+		var _winw = $(window).width();
+		var _winh = $(window).height();
+		if( $(this).hasClass('open') ){
+			$('body').addClass('open');
+			if( _winw<=768 ){
+				$('#nv').stop().slideDown();
+			}
+		}else{
+			$('body').removeClass('open');
+			if( _winw<=768 ){
+				$('#nv').stop().slideUp();
+			}
+		}
+	});
+
+	$('#hd .lang').mouseenter(function(){
+		$(this).find('dd').stop().slideDown();
+	});
+
+	$('#hd .lang').mouseleave(function(){
+		$(this).find('dd').stop().slideUp();
+	});
+	$('#hd .weixin,#hd .sina,#hd .mobile').mouseenter(function(event) {
+		$(this).find('.ma').stop().slideDown();
+	});
+	$('#hd .weixin,#hd .sina,#hd .mobile').mouseleave(function(event) {
+		$(this).find('.ma').stop().slideUp();
+	});
+
+	$('#hd .a-so').click(function(){
+		$(this).hide();
+		$('.soBox').addClass('open');
+	});
+
+	function fdNav(){
+	    var _winw = $(window).width();
+	    if( _winw<480 ){
+	        $('.fd-link dt').click(function(){
+	        	$(this).siblings('dd').stop().slideToggle().parent('dl').siblings('dl').find('dd').slideUp();
+	        });
+	    }
+	}
+	fdNav();
+	$(window).resize(function(event) {
+	    myNav();
+	});
+	// 导航
+	function myNav(){
+	    var _winw = $(window).width();
+	    if( _winw>767 ){
+	        $('.nav').show();
+	        $('.nav li').bind('mouseenter',function() {
+	            $(this).find('dl').stop().slideDown();
+	            if( $(this).find('dl').length ){
+	                $(this).addClass('ok');
+	            }
+	        });
+	        $('.nav li').bind('mouseleave',function() {
+	            $(this).removeClass('ok');
+	            $(this).find('dl').stop().slideUp();
+	        });
+	        $('body').removeClass('open');
+	    }else{
+	        $('.nav li').unbind('mouseenter mouseleave');
+	        $('.nav .v1').click(function(){
+	            if( $(this).siblings('dl').length ){
+	                $(this).siblings('dl').stop().slideToggle();
+	                $(this).parents('li').siblings('li').find('dl').stop().slideUp();
+	                return false;
+	            }
+	        });
+	    }
+	}
+	myNav();
+	$(window).resize(function(event) {
+	    myNav();
+	});
+
+	// 选项卡 鼠标点击切换
+	$(".TAB_CLICK li").mouseover(function(){
+	  var tab=$(this).parent(".TAB_CLICK");
+	  var con=tab.attr("id");
+	  var on=tab.find("li").index(this);
+	  $(this).addClass('on').siblings(tab.find("li")).removeClass('on');
+	  $(con).eq(on).show().siblings(con).hide();
+	});
+	
+	
+});
+
+function goUrl(sobj) {
+    var docurl = sobj.options[sobj.selectedIndex].value;
+    if (docurl != "") {
+        open(docurl, '_blank');
+        sobj.selectedIndex = 0;
+        sobj.blur();
+    }
+}

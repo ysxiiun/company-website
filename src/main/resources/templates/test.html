@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" id="content-wrapper">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p th:text="${hello}"></p>
+    <div id="tem">
+        <input type="button" value="改变页面" th:onclick="'javascript:toChange();'" />
+        <input type="button" value="跳转主页" th:onclick="'javascript:toIndex();'" />
+        <input type="text" id="textStr" />
+    </div>
+</body>
+</html>
+
+<script type="text/javascript" src="/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+    function toChange() {
+        $.ajax({
+            type: "get",
+            data: {
+                str: $("#textStr").val(),
+            },
+            url: /*[[@{/test/change}]]*/,
+            success: function (data) {
+                $("#tem").html(data);
+            }
+        })
+    }
+
+    function toIndex() {
+        $.ajax({
+            type: "get",
+            data: {
+            },
+            url: /*[[@{/test/index}]]*/,
+            success: function (data) {
+                $("#tem").html(data);
+            }
+        })
+    }
+
+    /*]]>*/
+</script>
